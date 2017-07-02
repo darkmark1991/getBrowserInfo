@@ -110,15 +110,12 @@
         }
 
 		var type = Function.prototype.call.bind( Object.prototype.toString );
-
-		function isEmpty(object) { for(var i in object) { return true; } return false; }
 	    
 	    function RecursiveDump (object, indent) {
         	for (var property in object) {
 			AddRowToInfo ("<pre>" + indent + property + "</pre>", "<pre>" + object[property] + "</pre>");
 			var objType = type(object[property]);
 			if(object[property] === Object(object[property]) || objType.includes("MimeType") || objType.includes("code")){
-			// if(!isEmpty(object[property])){
 				RecursiveDump (object[property], indent + "\t");
 			}
 		}}
