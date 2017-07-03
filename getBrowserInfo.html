@@ -1,4 +1,5 @@
 <head>
+  	<meta name="author" content="Amiran Ramishvili">
 	<style type="text/css">
 		td{
 			padding-left: 10px;
@@ -54,20 +55,25 @@
 		 }
 
         function GetVisitorInfo () {
+        	var date = new Date();
+
+            AddRowToInfo ("<b>Date</b>", date, "#cd657f", "#cd657f");
+            AddRowToInfo ("<br>", "<br>", "white");
+            console.log(date);
 
             AddRowToInfo ("<b>Javascript/Browser actual specs</b>", "<b></b>", "#cd657f", "#cd657f");
             // AddRowToInfo ("<br>", "<br>", "white");
-
             AddRowToInfo ("Javascript Version", jsver);
-
             var browser = GetBrowser();
-
             AddRowToInfo ("Browser Name", browser.name);
             AddRowToInfo ("Browser Version", browser.version);
-
             AddRowToInfo ("<br>", "<br>", "white");
-            AddRowToInfo ("<b>Navigator object overview</b>", "", "#cd657f", "#cd657f");
+            console.log("Javascript version: " + jsver);
+            console.log("Browser name: " + browser.name);
+            console.log("Browser version: " + browser.version);
 
+
+            AddRowToInfo ("<b>Navigator object overview</b>", "", "#cd657f", "#cd657f");
             AddRowToInfo ("Name of the browser (appName)", window.navigator.appName);
             AddRowToInfo ("Name of the browser vendor (vendor)", window.navigator.vendor);
             AddRowToInfo ("Code name of the browser (appCodeName)", window.navigator.appCodeName);
@@ -84,7 +90,6 @@
             AddRowToInfo ("User-agent request header (userAgent)", window.navigator.userAgent);
             AddRowToInfo ("Language of the browser (language)", window.navigator.language);
             AddRowToInfo ("Cookies are enabled (cookieEnabled)", window.navigator.cookieEnabled);
-
             AddRowToInfo ("Operating system (platform)", window.navigator.platform);
             if (window.navigator.language === undefined) {  // in Opera, the language, browserLanguage and userLanguage properties are equivalent
                 AddRowToInfo ("Language of the operating system's user interface (browserLanguage)", window.navigator.browserLanguage);
@@ -94,21 +99,16 @@
             AddRowToInfo ("Class of CPU (cpuClass)", window.navigator.cpuClass);
             AddRowToInfo ("Information about the OS and CPU (oscpu)", window.navigator.oscpu);
             AddRowToInfo ("System is online (onLine)", window.navigator.onLine);
-
             if(window.navigator.javaEnabled && typeof(window.navigator.javaEnabled) === "function")
            		AddRowToInfo ("Java is enabled (javaEnabled)", window.navigator.javaEnabled());
-
             if(window.navigator.taintEnabled && typeof(window.navigator.taintEnabled) === "function")
 	            AddRowToInfo ("Taint is enabled (taintEnabled)<br>(Removed in Javascript 1.2)", window.navigator.taintEnabled());
-
             AddRowToInfo ("<br>", "<br>", "white");
-            AddRowToInfo ("<b>Navigator object complete dump</b>", "(Navigator object also logged in the console)", "#cd657f", "#cd657f");
+            AddRowToInfo ("<b>Navigator object complete dump</b>", "", "#cd657f", "#cd657f");
             console.log(navigator);
-
 			RecursiveDump(navigator, ' ');
-
         }
-
+        
 		var type = Function.prototype.call.bind( Object.prototype.toString );
 	    
 	    function RecursiveDump (object, indent) {
