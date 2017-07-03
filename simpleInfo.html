@@ -1,0 +1,107 @@
+<head>
+  	<meta name="author" content="Amiran Ramishvili">
+
+	<script type="text/javascript"> var jsver = 1.0; </script>
+	<script language="Javascript1.1"> jsver = 1.1; </script>
+	<script language="Javascript1.2"> jsver = 1.2; </script>
+	<script language="Javascript1.3"> jsver = 1.3; </script>
+	<script language="Javascript1.4"> jsver = 1.4; </script>
+	<script language="Javascript1.5"> jsver = 1.5; </script>
+	<script language="Javascript1.6"> jsver = 1.6; </script>
+	<script language="Javascript1.7"> jsver = 1.7; </script>
+	<script language="Javascript1.8"> jsver = 1.8; </script>
+	<script language="Javascript1.9"> jsver = 1.9; </script>
+
+    <script type="text/javascript">
+        function AddRowToInfo (description, value) {
+            if (value !== undefined) {
+                var infoTable = document.getElementById ("info");
+                infoTable.innerHTML += description + ":\t" + value + "<br>";
+            }
+        }
+
+        function GetBrowser() {
+		    var ua=navigator.userAgent,tem,M=ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || []; 
+		    if(/trident/i.test(M[1])){
+		        tem=/\brv[ :]+(\d+)/g.exec(ua) || []; 
+		        return {name:'IE',version:(tem[1]||'')};
+		        }   
+		    if(M[1]==='Chrome'){
+		        tem=ua.match(/\bOPR|Edge\/(\d+)/)
+		        if(tem!=null)   {return {name:'Opera', version:tem[1]};}
+		        }   
+		    M=M[2]? [M[1], M[2]]: [navigator.appName, navigator.appVersion, '-?'];
+		    if((tem=ua.match(/version\/(\d+)/i))!=null) {M.splice(1,1,tem[1]);}
+		    return {
+		      name: M[0],
+		      version: M[1]
+		    };
+		 }
+
+        function GetVisitorInfo () {
+        	var date = new Date();
+
+            AddRowToInfo ("<b>Date</b>", date);
+            AddRowToInfo ("<br>", "<br>", "white");
+            console.log(date);
+
+            AddRowToInfo ("<b>Javascript/Browser actual specs</b>", "<b></b>");
+            // AddRowToInfo ("<br>", "<br>", "white");
+            AddRowToInfo ("Javascript Version", jsver);
+            var browser = GetBrowser();
+            AddRowToInfo ("Browser Name", browser.name);
+            AddRowToInfo ("Browser Version", browser.version);
+            AddRowToInfo ("<br>", "<br>", "white");
+            console.log("Javascript version: " + jsver);
+            console.log("Browser name: " + browser.name);
+            console.log("Browser version: " + browser.version);
+
+
+            AddRowToInfo ("<b>Navigator object overview</b>", "");
+            AddRowToInfo ("Name of the browser (appName)", window.navigator.appName);
+            AddRowToInfo ("Name of the browser vendor (vendor)", window.navigator.vendor);
+            AddRowToInfo ("Code name of the browser (appCodeName)", window.navigator.appCodeName);
+            AddRowToInfo ("Engine of the browser (product)", window.navigator.product);
+            AddRowToInfo ("Build number of the browser engine (productSub)", window.navigator.productSub);
+            if (window.opera) {
+                AddRowToInfo ("Build number of the browser (buildNumber)", window.opera.buildNumber ());
+                AddRowToInfo ("Version number of the browser (version)", window.opera.version ());
+            }
+            AddRowToInfo ("Version and platform of the browser (appVersion)", window.navigator.appVersion);
+            AddRowToInfo ("Version of the browser given by the vendor (vendorSub)", window.navigator.vendorSub);
+            AddRowToInfo ("Minor version of the browser (appMinorVersion)", window.navigator.appMinorVersion);
+            AddRowToInfo ("Build identifier of the browser (buildID)", window.navigator.buildID);
+            AddRowToInfo ("User-agent request header (userAgent)", window.navigator.userAgent);
+            AddRowToInfo ("Language of the browser (language)", window.navigator.language);
+            AddRowToInfo ("Cookies are enabled (cookieEnabled)", window.navigator.cookieEnabled);
+            AddRowToInfo ("Operating system (platform)", window.navigator.platform);
+            if (window.navigator.language === undefined) {  // in Opera, the language, browserLanguage and userLanguage properties are equivalent
+                AddRowToInfo ("Language of the operating system's user interface (browserLanguage)", window.navigator.browserLanguage);
+                AddRowToInfo ("Regional and Language settings of the operating system (userLanguage)", window.navigator.userLanguage);
+            }
+            AddRowToInfo ("Language of the installed operating system (systemLanguage)", window.navigator.systemLanguage);
+            AddRowToInfo ("Class of CPU (cpuClass)", window.navigator.cpuClass);
+            AddRowToInfo ("Information about the OS and CPU (oscpu)", window.navigator.oscpu);
+            AddRowToInfo ("System is online (onLine)", window.navigator.onLine);
+            if(window.navigator.javaEnabled && typeof(window.navigator.javaEnabled) === "function")
+           		AddRowToInfo ("Java is enabled (javaEnabled)", window.navigator.javaEnabled());
+            if(window.navigator.taintEnabled && typeof(window.navigator.taintEnabled) === "function")
+	            AddRowToInfo ("Taint is enabled (taintEnabled)<br>(Removed in Javascript 1.2)", window.navigator.taintEnabled());
+            AddRowToInfo ("<br>", "<br>", "white");
+            AddRowToInfo ("<b>Navigator object complete dump</b>", "", "#cd657f", "#cd657f");
+            console.log(navigator);
+			RecursiveDump(navigator, ' ');
+        }
+	    
+	    function RecursiveDump (object, indent) {
+        	for (var property in object) {
+			AddRowToInfo ("<pre>" + indent + property, object[property] + "</pre>");
+			if(object[property] === Object(object[property])){
+				RecursiveDump (object[property], indent + "\t");
+			}
+		}}
+    </script>
+</head>
+<body onload="GetVisitorInfo();">
+    <div id = "info"></div>
+</body>
